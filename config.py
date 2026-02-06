@@ -8,11 +8,11 @@ API_ID = int(os.environ.get("API_ID", "16874790"))
 # ------------------------------------------------
 API_HASH = os.environ.get("API_HASH", "46aa49adca0f1d184eb2a2f4a48a1df9")
 # ----------------D--------------------------------
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "7588426057:AAHizTBFO9aSJlQnTu9QAz6As6aMPjiHov8")
+BOT_TOKEN = os.environ.get("BOT_TOKEN", "7904470328:AAF4aJjL8Q710e5HOrkd45K2dSTn6ObsAws")
 # -----------------A-------------------------------
 BOT_USERNAME = os.environ.get("BOT_USERNAME", "NoPiracyBot")
 # ------------------X------------------------------
-OWNER_ID = int(os.environ.get("OWNER_ID", "7077003351"))
+OWNER_ID = int(os.environ.get("OWNER_ID", "8322551557"))
 # ------------------X------------------------------
 # ------------------------------------------------
 LOGGER_ID = int(os.environ.get("LOGGER_ID", "-1001887976586"))

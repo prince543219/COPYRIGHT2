@@ -112,61 +112,25 @@ async def activevc(_, message: Message):
 
 
 FORBIDDEN_KEYWORDS = [
-    # Adult/NSFW Content
-    "porn", "xxx", "sex", "nudes", "sex video", "cp", "child porn", "teen sex", 
-    "onlyfans leak", "hentai", "incest", "sex chat", "hot video", "18+ only", "bdsm",
-    
-    # Piracy - Movies/Shows
-    "download movie", "latest movie", "free movie", "web series", "torrent", 
-    "magnet link", "bluray", "web-dl", "hdcam", "hdrip", "720p", "1080p", "4k movie",
-    "bollywood movie", "hollywood movie", "netflix download", "prime video download",
-    "hotstar download", "mx player", "ullu", "alt balaji",
-    
-    # Piracy - Books/Education
-    "NCERT", "XII", "pdf book", "ebook free", "textbook pdf", "solution pdf",
-    "ncert solutions", "cbse pdf", "jee pdf", "neet pdf", "upsc pdf",
-    
-    # Piracy - Music
-    "mp3 download", "album free", "spotify download", "apple music download",
-    "flac", "320kbps",
-    
-    # Piracy - Software/Games
-    "cracked", "crack", "keygen", "serial key", "activation key", "license key",
-    "mod apk", "premium apk", "hack apk", "full version free", "nulled",
-    "cracked software", "pirated game", "steam crack",
-    
-    # Piracy - Courses
-    "udemy course", "coursera free", "paid course free", "course crack",
-    "skillshare free", "lynda free", "pluralsight free",
-    
-    # Piracy - Accounts
-    "netflix account", "spotify premium", "youtube premium", "disney+ account",
-    "amazon prime account", "shared account", "premium account free",
-    
-    # Carding/Fraud
-    "carding", "cc checker", "cvv", "bins", "fullz", "paypal logs", "bank logs",
-    "stripe logs", "buy cvv", "free cc", "ssn", "cc dump", "credit card generator",
-    "skimmer", "live cc", "fresh cvv", "paypal transfer", "buy dumps", "atm hack",
-    "balance checker",
-    
-    # Hacking Tools
-    "rat tool", "grabber", "logger", "keylogger", "fud crypter", "stealer",
-    "telegram token grabber", "ddos tool", "bruteforce", "openbullet config",
-    "sql injection", "zero-day", "exploit tool", "shell access",
-    
-    # Spam/Abuse Tools
-    "telegram auto join bot", "fake id", "telegram clone bot", "telegram bug",
-    "telegram hack", "telegram auto view", "mass report bot", "bot clone",
-    "group auto adder", "invite bomb", "join spammer", "follow bot",
-    "insta followers free", "telegram spam tool",
-    
-    # Suspicious Links
-    "mega.nz", "mediafire", "zippyshare", "gofile", "anonfiles", "dropbox.com/s",
-    "drive.google.com/file", "bit.ly", "tinyurl", "t.me/joinchat",
-    
-    # Release Tags
-    "[bluray]", "[web-dl]", "[hdrip]", "[cam]", "[ts]", "[hdcam]",
-    "[x264]", "[x265]", "[hevc]", "yify", "rarbg", "1337x"
+    "porn", "xxx", "sex", "NCERT", "XII", "page", "Ans", "meiotic", "divisions", "System.in", "Scanner", "void", "nextInt",
+    "nudes", "sex video", "cp", "child porn", "teen sex", "onlyfans leak", "hentai", "incest", "sex chat", "hot video",
+    "18+ only", "bdsm", "telegram sex bot", "carding", "cc checker", "cvv", "bins", "fullz", "paypal logs", "bank logs",
+    "stripe logs", "buy cvv", "free cc", "ssn", "cc dump", "credit card generator", "skimmer", "live cc", "fresh cvv",
+    "paypal transfer", "buy dumps", "atm hack", "balance checker", "rat tool", "grabber", "logger", "keylogger",
+    "fud crypter", "stealer", "telegram token grabber", "ddos tool", "bruteforce", "openbullet config",
+    "sql injection", "zero-day", "exploit tool", "tor links", "dark web link", "shell access", "free netflix",
+    "spotify premium free", "cracked account", "combo list", "telegram auto join bot", "fake id", "telegram clone bot",
+    "telegram bug", "telegram hack", "telegram auto view", "mass report bot", "bot clone", "group auto adder",
+    "invite bomb", "join spammer", "follow bot", "insta followers free", "telegram spam tool", "n3tflix bin",
+    "spotify bin", "disney+ bin", "primevideo bin", "hotstar bin", "crunchyroll bin", "yt premium bin", "apk cracked",
+    "mod apk", "leaked movie", "torrent link", "telegram movie download", "telegram song download", "zip song",
+    "mp3 telegram", "deepfake", "telegram token", "nude leak", "child abuse", "revenge porn", "botnet",
+    "hacked account", "free fire hack", "pubg hack", "fortnite hack", "insta hack", "youtube bot",
+    "telegram invite bot", "credit card leak", "premium dump", "ssn generator", "paypal generator",
+    "netflix cracked", "premium cookies", "telegram rdp", "rdp crack", "cloudflare bypass", "hacking course",
+    "cc shop", "leak group", "sell cvv", "leaked passwords", "password dump", "malware", "phishing tool",
+    "phishing link", "cookie stealer", "discord token grabber", "api abuse", "otp bypass", "number spammer",
+    "telegram flood bot", "session hijack", "paypal checker", "sms bomber", "email bomber", "spam bot"
 ]
 
 card_regex = re.compile(
