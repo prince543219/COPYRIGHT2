@@ -201,35 +201,136 @@ async def handle_message(client, message):
     # Also check for obfuscated text (spaces, special chars)
     cleaned_text = re.sub(r'[^a-z0-9]', '', text_to_check)
     
-    if any(keyword.lower() in text_to_check for keyword in FORBIDDEN_KEYWORDS) or any(keyword.lower() in cleaned_text for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check) or card_regex.search(text_to_check):
+    if any(keyword.lower() in text_to_check for keyword in FORBIDDEN_KEYWORDS) or any(keyword.lower() in cleaned_text for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
         
-        warning_text = f"""⚠️ **COPYRIGHT VIOLATION**
+        # Get current warnings
+        warnings = await get_warnings(message.from_user.id, message.chat.id)
+        new_warnings = await add_warning(message.from_user.id, message.chat.id)
+        
+        username = f"@{message.from_user.username}" if message.from_user.username else message.from_user.first_name
+        
+        if new_warnings == 1:
+            # First warning - just notify
+            warning_text = f"""⚠️ **WARNING #1 - FIRST STRIKE**
 
-@{message.from_user.username or message.from_user.first_name}
+{username}
 
-Your message was deleted for containing copyrighted/illegal content.
+Your message was deleted for copyright violation.
 
-**Blocked Categories:**
-• Movies/Shows (Pirated)
-• Books/PDFs
-• Software/Games (Cracked)
-• Premium Accounts
-• Carding/Fraud
-• Hacking Tools
+**🚫 What you did wrong:**
+Posted copyrighted/illegal content
 
-**Consequences:**
-1st: Warning
-2nd: Mute
-3rd: Ban
+**📊 Warning Status:** 1/3
+**⏭️ Next:** 2nd strike = 1 min mute
 
-Please share only legal content!"""
+**Please:** Share only legal content!"""
+            
+        elif new_warnings == 2:
+            # Second warning - notify
+            warning_text = f"""⚠️ **WARNING #2 - SECOND STRIKE**
+
+{username}
+
+**📊 Warning Status:** 2/3
+**⏭️ Next:** 3rd strike = 2 min mute
+
+**Last chance!** One more violation will result in mute."""
+            
+        elif new_warnings == 3:
+            # Third warning - 1 min mute
+            try:
+                await client.restrict_chat_member(
+                    message.chat.id,
+                    message.from_user.id,
+                    permissions={"can_send_messages": False},
+                    until_date=int(time.time()) + 60
+                )
+                warning_text = f"""🔇 **MUTED - THIRD STRIKE**
+
+{username}
+
+**Muted for:** 1 minute
+**Reason:** 3rd copyright violation
+**📊 Total Strikes:** 3
+
+**Next violation:** 2 min mute"""
+            except:
+                warning_text = f"""⚠️ **WARNING #3**
+
+{username}
+
+**Failed to mute** (Bot needs admin rights)
+**📊 Total Strikes:** 3"""
+                
+        elif new_warnings == 4:
+            # Fourth - 2 min mute
+            try:
+                await client.restrict_chat_member(
+                    message.chat.id,
+                    message.from_user.id,
+                    permissions={"can_send_messages": False},
+                    until_date=int(time.time()) + 120
+                )
+                warning_text = f"""🔇 **MUTED - FOURTH STRIKE**
+
+{username}
+
+**Muted for:** 2 minutes
+**📊 Total Strikes:** 4
+
+**Next:** 3 min mute"""
+            except:
+                warning_text = f"""⚠️ Strike #{new_warnings}
+
+{username} - Bot needs admin rights to mute."""
+                
+        elif new_warnings == 5:
+            # Fifth - 3 min mute
+            try:
+                await client.restrict_chat_member(
+                    message.chat.id,
+                    message.from_user.id,
+                    permissions={"can_send_messages": False},
+                    until_date=int(time.time()) + 180
+                )
+                warning_text = f"""🔇 **MUTED - FIFTH STRIKE**
+
+{username}
+
+**Muted for:** 3 minutes
+**📊 Total Strikes:** 5
+
+Repeated violations!"""
+            except:
+                warning_text = f"""⚠️ Strike #{new_warnings}"""
+                
+        else:
+            # 6+ strikes - progressive mute (doubles each time)
+            mute_minutes = min(new_warnings - 2, 30)  # Max 30 min
+            try:
+                await client.restrict_chat_member(
+                    message.chat.id,
+                    message.from_user.id,
+                    permissions={"can_send_messages": False},
+                    until_date=int(time.time()) + (mute_minutes * 60)
+                )
+                warning_text = f"""🔇 **MUTED**
+
+{username}
+
+**Muted for:** {mute_minutes} minutes
+**📊 Total Strikes:** {new_warnings}
+
+Stop violating rules!"""
+            except:
+                warning_text = f"""⚠️ Strike #{new_warnings} - Admin rights needed"""
         
         try:
             await message.reply_text(warning_text)
         except:
-            await message.reply_text(f"⚠️ @{message.from_user.username or 'User'} Your message violated copyright policy!")
+            await message.reply_text(f"⚠️ {username} Copyright violation! Strike #{new_warnings}")
     elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.caption):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
