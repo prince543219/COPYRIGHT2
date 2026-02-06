@@ -175,82 +175,58 @@ card_regex = re.compile(
 
 @app.on_message()
 async def handle_message(client, message):
+    # Skip private chats
+    if message.chat.type == "private":
+        return
+    
     # Skip if no text/caption
     if not message.text and not message.caption:
         return
     
-    # Get chat info for owner check
-    if message.chat.type != "private":
-        try:
-            chat = await client.get_chat(message.chat.id)
-            member = await client.get_chat_member(message.chat.id, message.from_user.id)
-            
-            # Skip if user is group owner or creator
-            if member.status in ["creator", "administrator"] and member.user.id == chat.owner.id if hasattr(chat, 'owner') else False:
-                logging.info(f"Skipping check for group owner: {message.from_user.id}")
-                return
-                
-            # Skip if user is bot owner
-            if message.from_user.id == OWNER_ID:
-                return
-                
-        except Exception as e:
-            logging.error(f"Error checking member status: {e}")
+    # Skip bot owner
+    if message.from_user.id == OWNER_ID:
+        return
     
-    # Check text and caption
-    text_to_check = message.text or message.caption or ""
+    # Check if user is admin/owner
+    try:
+        member = await client.get_chat_member(message.chat.id, message.from_user.id)
+        if member.status in ["creator", "administrator"]:
+            logging.info(f"Skipping check for admin/owner: {message.from_user.id}")
+            return
+    except:
+        pass
     
-    if any(keyword in text_to_check.lower() for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check):
-        logging.info(f"Deleting copyrighted content from user {message.from_user.id}")
+    text_to_check = (message.text or message.caption or "").lower()
+    
+    if any(keyword in text_to_check for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check):
+        logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
         
-        # Send detailed warning
-        warning_msg = f"""
-⚠️ **COPYRIGHT VIOLATION DETECTED** ⚠️
+        warning_text = f"""⚠️ **COPYRIGHT VIOLATION**
 
 @{message.from_user.username or message.from_user.first_name}
 
-🚫 **Your message was deleted for containing copyrighted/illegal content.**
+Your message was deleted for containing copyrighted/illegal content.
 
-**Reason:** Your message violated our copyright protection policy.
-
-**Categories Blocked:**
-• Movies/Shows (Pirated content)
-• Books/PDFs (Unauthorized distribution)
-• Software/Games (Cracked/Nulled)
-• Music Albums (Illegal downloads)
-• Premium Accounts (Sharing/Selling)
-• Carding/Fraud keywords
+**Blocked Categories:**
+• Movies/Shows (Pirated)
+• Books/PDFs
+• Software/Games (Cracked)
+• Premium Accounts
+• Carding/Fraud
 • Hacking Tools
 
-**⚖️ Consequences:**
-1st Offense: Warning (This message)
-2nd Offense: Temporary mute
-3rd Offense: Permanent ban
+**Consequences:**
+1st: Warning
+2nd: Mute
+3rd: Ban
 
-**📌 Please:**
-✅ Share only legal content
-✅ Respect copyright laws
-✅ Follow group rules
-
-**Need help?** Contact group admins.
-
-_This is an automated message from Copyright Protection Bot._
-"""
+Please share only legal content!"""
         
         try:
-            await message.reply_text(warning_msg, quote=False)
+            await message.reply_text(warning_text)
         except:
-            # Fallback simple message if formatting fails
-            await message.reply_text(
-                f"⚠️ @{message.from_user.username or message.from_user.first_name}
-
-"
-                "Your message was deleted for containing copyrighted/illegal content.
-"
-                "Please share only legal content. Repeated violations will result in a ban."
-            )
-    
+            await message.reply_text(f"⚠️ @{message.from_user.username or 'User'} Your message violated copyright policy!")
     elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.caption):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
