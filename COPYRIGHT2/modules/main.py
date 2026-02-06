@@ -180,7 +180,7 @@ async def handle_message(client, message):
         return
     
     # Skip if no text/caption
-    if not message.text and not message.caption:
+    if not edited_message.text and not edited_message.caption:
         return
     
     # Skip bot owner
@@ -342,6 +342,14 @@ Stop violating rules!"""
 # -------------------------------------------------------------------------------------
 @app.on_edited_message(filters.group & ~filters.me)
 async def delete_edited_messages(client, edited_message):
+    # Ignore reactions - only process real edits
+    if not edited_message.edit_date:
+        return
+    
+    # Check if content actually changed
+    if not edited_message.text and not edited_message.caption:
+        return
+    
     await edited_message.delete()
 
 

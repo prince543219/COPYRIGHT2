@@ -1,18 +1,16 @@
-[ INFO/2026-02-06 18:03:33,834] pyrogram.connection.connection: Connecting...
-[ INFO/2026-02-06 18:03:33,984] pyrogram.connection.connection: Connected! Production DC5 - IPv4
-[ INFO/2026-02-06 18:03:33,984] pyrogram.session.session: NetworkTask started
-[ INFO/2026-02-06 18:03:34,662] pyrogram.session.session: Session initialized: Layer 158
-[ INFO/2026-02-06 18:03:34,662] pyrogram.session.session: Device: CPython 3.10.12 - Pyrogram 2.0.106
-[ INFO/2026-02-06 18:03:34,662] pyrogram.session.session: System: Linux 5.15.0-86-generic (en)
-[ INFO/2026-02-06 18:03:34,662] pyrogram.session.session: Session started
-[ INFO/2026-02-06 18:03:34,689] pyrogram.session.session: PingTask started
-[ INFO/2026-02-06 18:03:35,023] pyrogram.dispatcher: Started 6 HandlerTasks
-[ERROR/2026-02-06 18:03:44,007] pyrogram.dispatcher: argument of type 'NoneType' is not iterable
+[ INFO/2026-02-06 18:05:49,251] pyrogram.connection.connection: Connecting...
+[ INFO/2026-02-06 18:05:49,399] pyrogram.connection.connection: Connected! Production DC5 - IPv4
+[ INFO/2026-02-06 18:05:49,399] pyrogram.session.session: NetworkTask started
+[ INFO/2026-02-06 18:05:50,067] pyrogram.session.session: Session initialized: Layer 158
+[ INFO/2026-02-06 18:05:50,067] pyrogram.session.session: Device: CPython 3.10.12 - Pyrogram 2.0.106
+[ INFO/2026-02-06 18:05:50,067] pyrogram.session.session: System: Linux 5.15.0-86-generic (en)
+[ INFO/2026-02-06 18:05:50,068] pyrogram.session.session: Session started
+[ INFO/2026-02-06 18:05:50,094] pyrogram.session.session: PingTask started
+[ INFO/2026-02-06 18:05:50,417] pyrogram.dispatcher: Started 6 HandlerTasks
+[ERROR/2026-02-06 18:05:57,331] pyrogram.dispatcher: name 'edited_message' is not defined
 Traceback (most recent call last):
   File "/usr/local/lib/python3.10/dist-packages/pyrogram/dispatcher.py", line 240, in handler_worker
     await handler.callback(self.client, *args)
-  File "/root/COPYRIGHT2/COPYRIGHT2/modules/main.py", line 334, in handle_message
-    elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.caption):
-  File "/root/COPYRIGHT2/COPYRIGHT2/modules/main.py", line 334, in <genexpr>
-    elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.caption):
-TypeError: argument of type 'NoneType' is not iterable
+  File "/root/COPYRIGHT2/COPYRIGHT2/modules/main.py", line 183, in handle_message
+    if not edited_message.text and not edited_message.caption:
+NameError: name 'edited_message' is not defined
