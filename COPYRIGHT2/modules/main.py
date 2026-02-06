@@ -112,59 +112,59 @@ async def activevc(_, message: Message):
 
 
 FORBIDDEN_KEYWORDS = [
-    # Adult/NSFW Content
+    # adult/nsfw content
     "porn", "xxx", "sex", "nudes", "sex video", "cp", "child porn", "teen sex", 
     "onlyfans leak", "hentai", "incest", "sex chat", "hot video", "18+ only", "bdsm",
     
-    # Piracy - Movies/Shows
+    # piracy - movies/shows
     "download movie", "latest movie", "free movie", "web series", "torrent", 
     "magnet link", "bluray", "web-dl", "hdcam", "hdrip", "720p", "1080p", "4k movie",
     "bollywood movie", "hollywood movie", "netflix download", "prime video download",
     "hotstar download", "mx player", "ullu", "alt balaji",
     
-    # Piracy - Books/Education
-    "NCERT", "XII", "pdf book", "ebook free", "textbook pdf", "solution pdf",
+    # piracy - books/education
+    "ncert", "xii", "pdf book", "ebook free", "textbook pdf", "solution pdf",
     "ncert solutions", "cbse pdf", "jee pdf", "neet pdf", "upsc pdf",
     
-    # Piracy - Music
+    # piracy - music
     "mp3 download", "album free", "spotify download", "apple music download",
     "flac", "320kbps",
     
-    # Piracy - Software/Games
+    # piracy - software/games
     "cracked", "crack", "keygen", "serial key", "activation key", "license key",
     "mod apk", "premium apk", "hack apk", "full version free", "nulled",
     "cracked software", "pirated game", "steam crack",
     
-    # Piracy - Courses
+    # piracy - courses
     "udemy course", "coursera free", "paid course free", "course crack",
     "skillshare free", "lynda free", "pluralsight free",
     
-    # Piracy - Accounts
+    # piracy - accounts
     "netflix account", "spotify premium", "youtube premium", "disney+ account",
     "amazon prime account", "shared account", "premium account free",
     
-    # Carding/Fraud
+    # carding/fraud
     "carding", "cc checker", "cvv", "bins", "fullz", "paypal logs", "bank logs",
     "stripe logs", "buy cvv", "free cc", "ssn", "cc dump", "credit card generator",
     "skimmer", "live cc", "fresh cvv", "paypal transfer", "buy dumps", "atm hack",
     "balance checker",
     
-    # Hacking Tools
+    # hacking tools
     "rat tool", "grabber", "logger", "keylogger", "fud crypter", "stealer",
     "telegram token grabber", "ddos tool", "bruteforce", "openbullet config",
     "sql injection", "zero-day", "exploit tool", "shell access",
     
-    # Spam/Abuse Tools
+    # spam/abuse tools
     "telegram auto join bot", "fake id", "telegram clone bot", "telegram bug",
     "telegram hack", "telegram auto view", "mass report bot", "bot clone",
     "group auto adder", "invite bomb", "join spammer", "follow bot",
     "insta followers free", "telegram spam tool",
     
-    # Suspicious Links
+    # suspicious links
     "mega.nz", "mediafire", "zippyshare", "gofile", "anonfiles", "dropbox.com/s",
     "drive.google.com/file", "bit.ly", "tinyurl", "t.me/joinchat",
     
-    # Release Tags
+    # release tags
     "[bluray]", "[web-dl]", "[hdrip]", "[cam]", "[ts]", "[hdcam]",
     "[x264]", "[x265]", "[hevc]", "yify", "rarbg", "1337x"
 ]
@@ -198,7 +198,10 @@ async def handle_message(client, message):
     
     text_to_check = (message.text or message.caption or "").lower()
     
-    if any(keyword in text_to_check for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check):
+    # Also check for obfuscated text (spaces, special chars)
+    cleaned_text = re.sub(r'[^a-z0-9]', '', text_to_check)
+    
+    if any(keyword.lower() in text_to_check for keyword in FORBIDDEN_KEYWORDS) or any(keyword.lower() in cleaned_text for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check) or card_regex.search(text_to_check):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
         
