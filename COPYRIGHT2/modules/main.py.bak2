@@ -175,82 +175,11 @@ card_regex = re.compile(
 
 @app.on_message()
 async def handle_message(client, message):
-    # Skip if no text/caption
-    if not message.text and not message.caption:
-        return
-    
-    # Get chat info for owner check
-    if message.chat.type != "private":
-        try:
-            chat = await client.get_chat(message.chat.id)
-            member = await client.get_chat_member(message.chat.id, message.from_user.id)
-            
-            # Skip if user is group owner or creator
-            if member.status in ["creator", "administrator"] and member.user.id == chat.owner.id if hasattr(chat, 'owner') else False:
-                logging.info(f"Skipping check for group owner: {message.from_user.id}")
-                return
-                
-            # Skip if user is bot owner
-            if message.from_user.id == OWNER_ID:
-                return
-                
-        except Exception as e:
-            logging.error(f"Error checking member status: {e}")
-    
-    # Check text and caption
-    text_to_check = message.text or message.caption or ""
-    
-    if any(keyword in text_to_check.lower() for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(text_to_check):
-        logging.info(f"Deleting copyrighted content from user {message.from_user.id}")
+    if any(keyword in message.text for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.text):
+        logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
-        
-        # Send detailed warning
-        warning_msg = f"""
-⚠️ **COPYRIGHT VIOLATION DETECTED** ⚠️
-
-@{message.from_user.username or message.from_user.first_name}
-
-🚫 **Your message was deleted for containing copyrighted/illegal content.**
-
-**Reason:** Your message violated our copyright protection policy.
-
-**Categories Blocked:**
-• Movies/Shows (Pirated content)
-• Books/PDFs (Unauthorized distribution)
-• Software/Games (Cracked/Nulled)
-• Music Albums (Illegal downloads)
-• Premium Accounts (Sharing/Selling)
-• Carding/Fraud keywords
-• Hacking Tools
-
-**⚖️ Consequences:**
-1st Offense: Warning (This message)
-2nd Offense: Temporary mute
-3rd Offense: Permanent ban
-
-**📌 Please:**
-✅ Share only legal content
-✅ Respect copyright laws
-✅ Follow group rules
-
-**Need help?** Contact group admins.
-
-_This is an automated message from Copyright Protection Bot._
-"""
-        
-        try:
-            await message.reply_text(warning_msg, quote=False)
-        except:
-            # Fallback simple message if formatting fails
-            await message.reply_text(
-                f"⚠️ @{message.from_user.username or message.from_user.first_name}
-
-"
-                "Your message was deleted for containing copyrighted/illegal content.
-"
-                "Please share only legal content. Repeated violations will result in a ban."
-            )
-    
+      #  user_mention = from_user.mention
+        await message.reply_text(f"@{message.from_user.username} 𝖣𝗈𝗇'𝗍 𝗌𝖾𝗇𝖽 𝗇𝖾𝗑𝗍 𝗍𝗂𝗆𝖾!")
     elif any(keyword in message.caption for keyword in FORBIDDEN_KEYWORDS) or card_regex.search(message.caption):
         logging.info(f"Deleting message with ID {message.id}")
         await message.delete()
