@@ -340,6 +340,23 @@ Stop violating rules!"""
         
 # -------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------
+@app.on_edited_message(filters.group & ~filters.me)
+async def delete_edited_messages(client, edited_message):
+    # Only delete if message text/caption actually changed
+    # Reactions don't change text/caption
+    
+    # Must have edit_date
+    if not edited_message.edit_date:
+        return
+    
+    # Must have actual content (text or caption)
+    current_content = edited_message.text or edited_message.caption
+    if not current_content:
+        return
+    
+    # If we reach here, it's a real text edit
+    await edited_message.delete()
+
 # ----------------------------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------------------------------
 def delete_long_messages(_, m):
