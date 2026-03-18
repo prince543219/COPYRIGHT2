@@ -4,18 +4,17 @@
 import os
 from os import getenv
 # ---------------R---------------------------------
-API_ID = int(os.environ.get("API_ID", "16874790"))
-# ------------------------------------------------
-API_HASH = os.environ.get("API_HASH", "46aa49adca0f1d184eb2a2f4a48a1df9")
-# ----------------D--------------------------------
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "7904470328:AAF4aJjL8Q710e5HOrkd45K2dSTn6ObsAws")
+API_ID = 28716246
+API_HASH = "d9277abd08e0277e0a899415916e39b3"
+BOT_TOKEN = "8640231084:AAEo1nNnSDSoLTgwQEh-a0N26K39w_8YLAY"
 # -----------------A-------------------------------
-BOT_USERNAME = os.environ.get("BOT_USERNAME", "NoPiracyBot")
+BOT_USERNAME = "Aware_of_yourself"
+
 # ------------------X------------------------------
-OWNER_ID = int(os.environ.get("OWNER_ID", "8322551557"))
+OWNER_ID = 6375272628
 # ------------------X------------------------------
 # ------------------------------------------------
-LOGGER_ID = int(os.environ.get("LOGGER_ID", "-1001887976586"))
+LOGGER_ID = -1002107679944
 # ------------------------------------------------
-MONGO_URL = os.environ.get("MONGO_URL", "mongodb+srv://mohit18324:TxsMAm4VjmS0nQ74@cluster0.ynzyhrh.mongodb.net")
+MONGO_URL = "mongodb+srv://princesingh71113:princesingh71113@cluster0.zmfehoe.mongodb.net/?appName=Cluster0"
 # ------------------------------------------------
