@@ -1,9 +1,0 @@
-[ INFO/2026-02-06 18:12:24,672] pyrogram.connection.connection: Connecting...
-[ INFO/2026-02-06 18:12:24,822] pyrogram.connection.connection: Connected! Production DC5 - IPv4
-[ INFO/2026-02-06 18:12:24,822] pyrogram.session.session: NetworkTask started
-[ INFO/2026-02-06 18:12:25,489] pyrogram.session.session: Session initialized: Layer 158
-[ INFO/2026-02-06 18:12:25,490] pyrogram.session.session: Device: CPython 3.10.12 - Pyrogram 2.0.106
-[ INFO/2026-02-06 18:12:25,490] pyrogram.session.session: System: Linux 5.15.0-86-generic (en)
-[ INFO/2026-02-06 18:12:25,490] pyrogram.session.session: Session started
-[ INFO/2026-02-06 18:12:25,516] pyrogram.session.session: PingTask started
-[ INFO/2026-02-06 18:12:25,844] pyrogram.dispatcher: Started 6 HandlerTasks
