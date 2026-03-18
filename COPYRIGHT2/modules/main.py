@@ -180,7 +180,7 @@ async def handle_message(client, message):
         return
     
     # Skip if no text/caption
-    if not edited_message.text and not edited_message.caption:
+    if not message.text and not message.caption:
         return
     
     # Skip bot owner
