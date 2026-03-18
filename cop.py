@@ -4,13 +4,18 @@ from pyrogram.errors import FloodWait
 from motor.motor_asyncio import AsyncIOMotorClient
 
 # CONFIG
-API_ID = 123456
-API_HASH = "your_api_hash"
-BOT_TOKEN = "your_bot_token"
-OWNER_ID = 123456789
+API_ID = 28716246
+API_HASH = "d9277abd08e0277e0a899415916e39b3"
+BOT_TOKEN = "8640231084:AAEo1nNnSDSoLTgwQEh-a0N26K39w_8YLAY"
+OWNER_ID = 6375272628
 
-MONGO_URI = "mongodb+srv://user:pass@cluster.mongodb.net/?retryWrites=true&w=majority"
+MONGO_URI = "mongodb+srv://princesingh71113:princesingh71113@cluster0.zmfehoe.mongodb.net/?appName=Cluster0"
 DB_NAME = "nsfw_bot"
+
+
+
+# ------------------------------------------------
+
 
 app = Client("nsfw_bot", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
