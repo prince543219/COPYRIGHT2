@@ -353,7 +353,7 @@ Stop violating rules!"""
 def delete_long_messages(_, m):
     return len(m.text.split()) > 10
 
-@app.on_message(filters.group & filters.private & delete_long_messages)
+@app.on_message(filters.group & filters.text & filters.create(delete_long_messages))
 async def delete_and_reply(_, msg):
     await msg.delete()
     user_mention = msg.from_user.mention
