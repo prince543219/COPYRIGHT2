@@ -19,7 +19,15 @@ from pyrogram.errors import FloodWait
 # ------------------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------
+warnings_db = {}
 
+async def get_warnings(user_id, chat_id):
+    return warnings_db.get((user_id, chat_id), 0)
+
+async def add_warning(user_id, chat_id):
+    current = warnings_db.get((user_id, chat_id), 0)
+    warnings_db[(user_id, chat_id)] = current + 1
+    return warnings_db[(user_id, chat_id)]
 
 start_txt = """<b> 🤖 𝖦𝗋𝗈𝗎𝗉 𝖲𝖾𝖼𝗎𝗋𝗂𝗍𝗒 𝖱𝗈𝖻𝗈𝗍 🛡️ </b>
 
