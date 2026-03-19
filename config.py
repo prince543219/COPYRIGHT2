@@ -16,5 +16,5 @@ OWNER_ID = 6375272628
 # ------------------------------------------------
 LOGGER_ID = -1002107679944
 # ------------------------------------------------
-MONGO_URL = "mongodb+srv://princesingh71113:princesingh71113@cluster0.zmfehoe.mongodb.net/?appName=Cluster0"
+MONGO_URL = ""
 # ------------------------------------------------
